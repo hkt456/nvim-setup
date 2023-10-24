@@ -121,6 +121,12 @@ return packer.startup(function(use)
 			require("bufterm").setup()
 		end,
 	})
+
+	--markdown
+	use({ "iamcco/markdown-preview.nvim" })
+
+	--LaTex
+	use("lervag/vimtex")
 	if packer_bootstrap then
 		require("packer").sync()
 	end
