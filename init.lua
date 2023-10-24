@@ -55,8 +55,7 @@ vim.g.vimtex_compiler_method = "latexrun"
 
 -- Most VimTeX mappings rely on localleader, and this can be changed with the
 -- following line. The default is usually fine and is the symbol "\".
-vim.g.maplocalleader = "/"
-
+vim.g.maplocalleader = ","
 -- Define autocmds for the cpp filetype
 vim.cmd([[
   autocmd FileType cpp nnoremap <buffer> <F5> :w <bar> !g++ -Wall -Wno-unused-result -std=c++17 -O2 % -o %:r && ./%:r < ./inp.txt <CR>
