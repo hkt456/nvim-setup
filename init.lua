@@ -18,7 +18,6 @@ require("hkt456.plugins.gitsigns")
 require("bufterm").setup({
 	save_native_terms = true, -- integrate native terminals from `:terminal` command
 	start_in_insert = true, -- start terminal in insert mode
-	remember_mode = true, -- remember vi_mode of terminal buffer
 	enable_ctrl_w = true, -- use <C-w> for window navigating in terminal mode (like vim8)
 	terminal = { -- default terminal settings
 		buflisted = false, -- whether to set 'buflisted' option
@@ -40,26 +39,40 @@ vim.cmd("syntax enable")
 
 -- Viewer options: One may configure the viewer either by specifying a built-in
 -- viewer method:
-vim.g.vimtex_view_method = "zathura"
-
+vim.g.vimtex_view_method = "skim"
+vim.g.vimtex_view_skim_sync = 1
+vim.g.vimtex_view_skim_activate = 1
 -- Or with a generic interface:
-vim.g.vimtex_view_general_viewer = "okular"
-vim.g.vimtex_view_general_options = "--unique file:@pdf#src:@line@tex"
+-- vim.g.vimtex_view_general_viewer = "okular"
+-- vim.g.vimtex_view_general_options = "--unique file:@pdf#src:@line@tex"
 
 -- VimTeX uses latexmk as the default compiler backend. If you use it, which is
 -- strongly recommended, you probably don't need to configure anything. If you
 -- want another compiler backend, you can change it as follows. The list of
 -- supported backends and further explanation is provided in the documentation,
 -- see ":help vimtex-compiler".
-vim.g.vimtex_compiler_method = "latexrun"
+vim.g.vimtex_compiler_method = "latexmk"
 
 -- Most VimTeX mappings rely on localleader, and this can be changed with the
 -- following line. The default is usually fine and is the symbol "\".
 vim.g.maplocalleader = ","
+
+-- This is to open pdf inside nvim
+-- Define the Rpdf command
+vim.cmd([[
+  command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> -
+]])
+
+-- Define the RpdfFmt command
+vim.cmd([[
+  command! -complete=file -nargs=1 RpdfFmt :r !pdftotext -nopgbrk <q-args> - | fmt -csw78
+]])
+
 -- Define autocmds for the cpp filetype
 vim.cmd([[
-  autocmd FileType cpp nnoremap <buffer> <F5> :w <bar> !g++ -Wall -Wno-unused-result -std=c++17 -O2 % -o %:r && ./%:r < ./inp.txt <CR>
-  autocmd FileType cpp nnoremap <buffer> <F6> :w <bar> !g++ -Wall -Wno-unused-result -std=c++17 -O2 % -o %:r && ./%:r <CR>
+
+  autocmd FileType cpp nnoremap <buffer> <F5> :cd %:p:h <bar> !g++ -Wall -Wno-unused-result -std=c++17 -O2 % -o %:r && ./%:r < ./inp.txt <CR>
+  autocmd FileType cpp nnoremap <buffer> <F6> :w <bar> !g++ -Wall -Wno-unused-result -std=c++17 -O2 %:p -o %:r && %:p:r <CR>
   autocmd filetype java nnoremap <F5> :w <bar> !javac % && java -enableassertions %:r <CR>
   autocmd BufNewFile  *.cpp 0r ~/.config/nvim/template/template.cpp 
   autocmd BufNewFile *.c 0r ~/.config/.nvim/template/template.c 
