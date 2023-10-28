@@ -121,7 +121,8 @@ return packer.startup(function(use)
 			require("bufterm").setup()
 		end,
 	})
-
+	-- Copilot
+	use({ "github/copilot.vim" })
 	--markdown
 	use({ "iamcco/markdown-preview.nvim" })
 
