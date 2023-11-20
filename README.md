@@ -22,6 +22,7 @@ NeoVIM Setup Files and Developer Setups
 - 🚀 Functional developer environment for
   - C++ and C
   - Python
+  - Rust
   - Nodejs
   - Vanilla Website Development
   - Machine Learning and Artificial Intelligence
