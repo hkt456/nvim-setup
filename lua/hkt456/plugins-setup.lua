@@ -130,6 +130,14 @@ return packer.startup(function(use)
 	--markdown
 	use({ "iamcco/markdown-preview.nvim" })
 
+	-- Rust
+	use({
+		"rust-lang/rust.vim",
+		ft = "rust",
+		init = function()
+			vim.g.rustfmt_autosave = 1
+		end,
+	})
 	--LaTex
 	use("lervag/vimtex")
 	if packer_bootstrap then
